@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анастасия — 23</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+background:#fff;
+font-family:'Playfair Display',serif;
+color:#111;
+overflow:hidden;
+}
+
+/* Золотое свечение */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:radial-gradient(circle at center, rgba(212,175,55,0.15), transparent 70%);
+animation:glow 6s ease-in-out infinite alternate;
+z-index:-1;
+}
+
+@keyframes glow{
+from{opacity:.4;}
+to{opacity:.8;}
+}
+
+/* Пароль */
+.password-screen{
+position:fixed;
+inset:0;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:#fff;
+z-index:20;
+}
+
+.password-screen input{
+padding:12px;
+border:1px solid #111;
+margin-bottom:15px;
+text-align:center;
+font-family:'Playfair Display',serif;
+}
+
+.password-screen button{
+padding:10px 20px;
+border:1px solid #111;
+background:transparent;
+cursor:pointer;
+}
+
+/* Основной экран */
+.main{
+display:none;
+height:100vh;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.container{
+max-width:520px;
+padding:40px 20px;
+}
+
+h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.subtitle{
+letter-spacing:6px;
+font-size:14px;
+margin-bottom:30px;
+opacity:.6;
+}
+
+.info{
+line-height:2;
+font-size:16px;
+margin-bottom:40px;
+}
+
+.countdown{
+display:flex;
+justify-content:center;
+gap:25px;
+margin-bottom:40px;
+}
+
+.time-box span{
+font-size:30px;
+}
+
+.label{
+font-size:11px;
+opacity:.5;
+letter-spacing:2px;
+}
+
+button{
+padding:12px 26px;
+margin:5px;
+border:1px solid #111;
+background:transparent;
+cursor:pointer;
+font-family:'Playfair Display',serif;
+transition:.3s;
+}
+
+button:hover{
+background:#111;
+color:#fff;
+}
+
+/* Свеча */
+.candle{
+margin:20px auto;
+width:10px;
+height:40px;
+background:#111;
+position:relative;
+}
+
+.flame{
+position:absolute;
+top:-15px;
+left:-5px;
+width:20px;
+height:20px;
+background:gold;
+border-radius:50%;
+animation:flicker .2s infinite alternate;
+}
+
+@keyframes flicker{
+from{transform:scale(1);}
+to{transform:scale(1.1);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="password-screen" id="passwordScreen">
+<h2>Введите пароль</h2>
+<input type="password" id="passwordInput">
+<button onclick="checkPassword()">Войти</button>
+</div>
+
+<div class="main" id="main">
+<div class="container">
+
+<h1 id="guestTitle">Приглашение</h1>
+<div class="subtitle">ANASTASIA · 23</div>
+
+<div class="info">
+3 апреля 2026 · 18:00<br>
+г. Уяр, ул. 30 лет Победы, 4а<br>
+Dress code: WHITE
+</div>
+
+<div class="candle" onclick="blowCandle()">
+<div class="flame" id="flame"></div>
+</div>
+
+<div class="countdown">
+<div class="time-box"><span id="days"></span><div class="label">DAYS</div></div>
+<div class="time-box"><span id="hours"></span><div class="label">HOURS</div></div>
+<div class="time-box"><span id="minutes"></span><div class="label">MIN</div></div>
+<div class="time-box"><span id="seconds"></span><div class="label">SEC</div></div>
+</div>
+
+<button onclick="sendRSVP('Приду')">Приду</button>
+<button onclick="sendRSVP('Не смогу')">Не смогу</button>
+
+</div>
+</div>
+
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* Пароль */
+function checkPassword(){
+const correct="Настя23";
+const input=document.getElementById("passwordInput").value;
+
+if(input===correct){
+document.getElementById("passwordScreen").style.display="none";
+document.getElementById("main").style.display="flex";
+startMusic();
+}else{
+alert("Неверный пароль");
+}
+}
+
+/* Персональное имя */
+const params=new URLSearchParams(window.location.search);
+const name=params.get("name");
+if(name){
+document.addEventListener("DOMContentLoaded",()=>{
+document.getElementById("guestTitle").innerText=name+", приглашаю тебя 🤍";
+});
+}
+
+/* Таймер */
+const eventDate=new Date("April 3, 2026 18:00:00").getTime();
+setInterval(()=>{
+const now=new Date().getTime();
+const d=eventDate-now;
+document.getElementById("days").innerText=Math.floor(d/(1000*60*60*24));
+document.getElementById("hours").
+
+Супруга❤️, [21.02.2026 17:42]
+innerText=Math.floor((d%(1000*60*60*24))/(1000*60*60));
+document.getElementById("minutes").innerText=Math.floor((d%(1000*60*60))/(1000*60));
+document.getElementById("seconds").innerText=Math.floor((d%(1000*60))/1000);
+},1000);
+
+/* Свеча */
+function blowCandle(){
+document.getElementById("flame").style.display="none";
+}
+
+/* Музыка */
+function startMusic(){
+const music=document.getElementById("music");
+music.volume=0;
+music.play();
+let fade=setInterval(()=>{
+if(music.volume<0.5){music.volume+=0.02;}
+else{clearInterval(fade);}
+},200);
+}
+
+/* Telegram RSVP */
+function sendRSVP(answer){
+const token="8415527986:AAGIIxbzKJunh4eaHH-lKsfKZRS4N_jHQjI";
+const chat_id="712216086";
+const guest=name?name:"Гость";
+
+const text=encodeURIComponent("🤍 RSVP\nИмя: "+guest+"\nОтвет: "+answer);
+
+fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${text}`)
+.then(()=>alert("Ответ отправлен 🤍"))
+.catch(()=>alert("Ошибка отправки"));
+}
+</script>
+
+</body>
+</html>
